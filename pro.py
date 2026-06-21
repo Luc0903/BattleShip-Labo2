@@ -164,7 +164,7 @@ def pantalla_fin(ganador):
 # Arranca el juego
 def main():
     cantidad = pantalla_config()
-    juego = Juego(cantidad)
+    juego = Juego(cantidad) #Cantidad es cantidad de jugadores, nada de muchos juegos eh
     pantalla_handoff(juego)
 
     while True:
@@ -183,7 +183,7 @@ def main():
                 if btn_modo.collidepoint(e.pos) and juego.actual.bombas > 0:
                     juego.modo = 'bomba' if juego.modo == 'simple' else 'simple'
                     continue
-                # ¿clic en un objetivo?
+                # Determino el objetivo al que le pego en caso de haber más de 1 objetivo disponible
                 cambio = False
                 for rect, idx in botones_obj:
                     if rect.collidepoint(e.pos):
@@ -192,11 +192,11 @@ def main():
                         break
                 if cambio:
                     continue
-                # ¿clic en la grilla?
+                # Determinamos la casilla que se tocó
                 celda = celda_desde_mouse(e.pos)
                 if celda:
-                    consumio = juego.disparar(*celda)
-                    if consumio:
+                    disparo_valido = juego.disparar(*celda)
+                    if disparo_valido: #Disparo válido es solo consecuencia de tocado o agua, para repetidos, dibujamos todo de nuevo
                         if juego.ganador():
                             break
                 # se refleja el resultado en la grilla y panel
