@@ -77,7 +77,6 @@ def dibujar_panel(juego, botones_obj, btn_modo):
     modo_txt = "BOMBA EN CRUZ" if juego.modo == 'bomba' else "DISPARO SIMPLE"
     pygame.draw.rect(pantalla, BTN_SEL if juego.modo == 'bomba' else BTN, btn_modo)
     texto(modo_txt, btn_modo.centerx, btn_modo.centery, fuente_p, BLANCO, centrado=True)
-    texto("(B = cambiar modo)", 20, 145, fuente_p, GRIS)
 
     texto("Atacar a:", 20, 185, fuente)
     for rect, idx in botones_obj:
@@ -90,7 +89,7 @@ def dibujar_panel(juego, botones_obj, btn_modo):
 
 
 def construir_botones(juego):
-    botones_obj = []
+    botones_obj = [] # HACen referencia al jugador al que le vas a pregar
     y = 215
     for j in juego.oponentes():
         idx = juego.jugadores.index(j)
@@ -162,10 +161,7 @@ def pantalla_fin(ganador):
             if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
                 pygame.quit(); sys.exit()
 
-
-# =====================================================================
-# BUCLE PRINCIPAL
-# =====================================================================
+# Arranca el juego
 def main():
     cantidad = pantalla_config()
     juego = Juego(cantidad)
@@ -181,10 +177,6 @@ def main():
         for e in pygame.event.get():
             if e.type == pygame.QUIT:
                 pygame.quit(); sys.exit()
-
-            if e.type == pygame.KEYDOWN and e.key == pygame.K_b:
-                if juego.actual.bombas > 0:
-                    juego.modo = 'bomba' if juego.modo == 'simple' else 'simple' #Detesto python... que es esta cosa horrible
 
             if e.type == pygame.MOUSEBUTTONDOWN:
                 # ¿clic en boton de modo?
