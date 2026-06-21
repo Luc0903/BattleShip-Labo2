@@ -1,14 +1,14 @@
 import random
 import time
 
-FILAS = COLUMNAS = 10
-FLOTA = [4, 3, 2, 2]
-BOMBAS_CRUZ = 3
+FILAS = COLUMNAS = 10 #Si te pinta agregar más filas acá sería
+FLOTA = [4, 3, 2, 2] #Si queremos agregar más barcos, acá sería
+BOMBAS_CRUZ = 3 # Siqueremos agregar más bombas, acá sería.
 
 
 class Tablero:
     def __init__(self):
-        self.barcos = [[0] * COLUMNAS for i in range(FILAS)]
+        self.barcos = [[0] * COLUMNAS for i in range(FILAS)] #[0] * columnas nos permite crear arrays anidadados llenos de 0s, funciona como nuestro tablero real
         self.disparos = [[None] * COLUMNAS for j in range(FILAS)]
         self.celdas_barco = 0
         self._colocar_flota()
@@ -34,7 +34,7 @@ class Tablero:
 
     def recibir_disparo(self, f, c):
         """Devuelve 'agua', 'tocado' o 'repetido'."""
-        if self.disparos[f][c] is not None:
+        if self.disparos[f][c] is not None: #Esta solo revisa si se disparó ahí o no, la llenamos de nones en su definición
             return 'repetido'
         if self.barcos[f][c] == 1:
             self.disparos[f][c] = 'tocado'
@@ -76,7 +76,7 @@ class Juego:
     def oponentes(self):
         return [j for j in self.jugadores if j.vivo and j is not self.actual]
 
-    def _elegir_objetivo_inicial(self):
+    def _elegir_objetivo_inicial(self): #Este método solo lo usamos una vez para el principio de cada instancia de juego, por defecto le apuntas al siguente y lesto
         ops = self.oponentes()
         self.objetivo = self.jugadores.index(ops[0]) if ops else None
 
